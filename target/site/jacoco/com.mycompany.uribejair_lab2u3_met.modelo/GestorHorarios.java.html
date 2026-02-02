@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GestorHorarios.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">UribeJair_Lab2U3_Met</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.uribejair_lab2u3_met.modelo</a> &gt; <span class="el_source">GestorHorarios.java</span></div><h1>GestorHorarios.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.uribejair_lab2u3_met.modelo;
+
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import org.bson.Document;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * GESTOR DE HORARIOS
+ * Maneja todas las operaciones CRUD de configuracion de horarios en MongoDB
+ */
+public class GestorHorarios {
+    
+    private MongoCollection&lt;Document&gt; coleccionHorarios;
+<span class="fc" id="L23">    private DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_LOCAL_TIME;</span>
+    
+<span class="fc" id="L25">    public GestorHorarios() {</span>
+<span class="fc" id="L26">        MongoDatabase database = ConexionMongoDB.getInstancia().getDatabase();</span>
+<span class="fc" id="L27">        coleccionHorarios = database.getCollection(&quot;horarios&quot;);</span>
+<span class="fc" id="L28">        System.out.println(&quot;GestorHorarios inicializado&quot;);</span>
+<span class="fc" id="L29">        inicializarHorariosDefault();</span>
+<span class="fc" id="L30">    }</span>
+    
+    // =============== CREATE ===============
+    
+    /**
+     * Guardar o actualizar configuracion de horario
+     */
+    public boolean guardarConfiguracion(ConfiguracionHorario config) {
+        try {
+<span class="nc" id="L39">            Document doc = new Document()</span>
+<span class="nc" id="L40">                    .append(&quot;diaSemana&quot;, config.getDiaSemana())</span>
+<span class="nc" id="L41">                    .append(&quot;horaInicio&quot;, config.getHoraInicio().format(timeFormatter))</span>
+<span class="nc" id="L42">                    .append(&quot;horaFin&quot;, config.getHoraFin().format(timeFormatter))</span>
+<span class="nc" id="L43">                    .append(&quot;duracionCita&quot;, config.getDuracionCita())</span>
+<span class="nc" id="L44">                    .append(&quot;tiempoDescanso&quot;, config.getTiempoDescanso())</span>
+<span class="nc" id="L45">                    .append(&quot;activo&quot;, config.isActivo());</span>
+            
+            // Actualizar si existe, insertar si no existe
+<span class="nc" id="L48">            Document filtro = new Document(&quot;diaSemana&quot;, config.getDiaSemana());</span>
+<span class="nc" id="L49">            Document existente = coleccionHorarios.find(filtro).first();</span>
+            
+<span class="nc bnc" id="L51" title="All 2 branches missed.">            if (existente != null) {</span>
+<span class="nc" id="L52">                coleccionHorarios.replaceOne(filtro, doc);</span>
+<span class="nc" id="L53">                System.out.println(&quot;Configuracion actualizada para: &quot; + config.getDiaSemana());</span>
+            } else {
+<span class="nc" id="L55">                coleccionHorarios.insertOne(doc);</span>
+<span class="nc" id="L56">                System.out.println(&quot;Configuracion creada para: &quot; + config.getDiaSemana());</span>
+            }
+            
+<span class="nc" id="L59">            return true;</span>
+            
+<span class="nc" id="L61">        } catch (Exception e) {</span>
+<span class="nc" id="L62">            System.err.println(&quot;Error al guardar configuracion: &quot; + e.getMessage());</span>
+<span class="nc" id="L63">            e.printStackTrace();</span>
+<span class="nc" id="L64">            return false;</span>
+        }
+    }
+    
+    // =============== READ ===============
+    
+    /**
+     * Obtener configuracion por dia de la semana
+     */
+    public ConfiguracionHorario obtenerConfiguracion(String diaSemana) {
+        try {
+<span class="fc" id="L75">            Document doc = coleccionHorarios.find(Filters.eq(&quot;diaSemana&quot;, diaSemana)).first();</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            if (doc != null) {</span>
+<span class="fc" id="L77">                return documentToConfiguracion(doc);</span>
+            }
+<span class="fc" id="L79">        } catch (Exception e) {</span>
+<span class="fc" id="L80">            System.err.println(&quot;Error al obtener configuracion: &quot; + e.getMessage());</span>
+<span class="fc" id="L81">            e.printStackTrace();</span>
+<span class="fc" id="L82">        }</span>
+        
+        // Retornar configuracion por defecto si no existe
+<span class="fc" id="L85">        return obtenerConfiguracionDefault(diaSemana);</span>
+    }
+    
+    /**
+     * Obtener todas las configuraciones
+     */
+    public List&lt;ConfiguracionHorario&gt; obtenerTodasLasConfiguraciones() {
+<span class="fc" id="L92">        List&lt;ConfiguracionHorario&gt; configuraciones = new ArrayList&lt;&gt;();</span>
+        
+        try {
+<span class="nc bnc" id="L95" title="All 2 branches missed.">            for (Document doc : coleccionHorarios.find()) {</span>
+<span class="nc" id="L96">                configuraciones.add(documentToConfiguracion(doc));</span>
+<span class="nc" id="L97">            }</span>
+<span class="nc" id="L98">            System.out.println(&quot;Configuraciones recuperadas: &quot; + configuraciones.size());</span>
+            
+<span class="fc" id="L100">        } catch (Exception e) {</span>
+<span class="fc" id="L101">            System.err.println(&quot;Error al obtener configuraciones: &quot; + e.getMessage());</span>
+<span class="fc" id="L102">            e.printStackTrace();</span>
+<span class="nc" id="L103">        }</span>
+        
+<span class="fc" id="L105">        return configuraciones;</span>
+    }
+    
+    /**
+     * Obtener dias activos
+     */
+    public List&lt;String&gt; obtenerDiasActivos() {
+<span class="fc" id="L112">        List&lt;String&gt; diasActivos = new ArrayList&lt;&gt;();</span>
+        
+        try {
+<span class="nc bnc" id="L115" title="All 2 branches missed.">            for (Document doc : coleccionHorarios.find(Filters.eq(&quot;activo&quot;, true))) {</span>
+<span class="nc" id="L116">                diasActivos.add(doc.getString(&quot;diaSemana&quot;));</span>
+<span class="nc" id="L117">            }</span>
+<span class="fc" id="L118">        } catch (Exception e) {</span>
+<span class="fc" id="L119">            System.err.println(&quot;Error al obtener dias activos: &quot; + e.getMessage());</span>
+<span class="nc" id="L120">        }</span>
+        
+<span class="fc" id="L122">        return diasActivos;</span>
+    }
+    
+    // =============== UPDATE ===============
+    
+    /**
+     * Activar o desactivar un dia
+     */
+    public boolean actualizarEstadoDia(String diaSemana, boolean activo) {
+        try {
+<span class="pc" id="L132">            coleccionHorarios.updateOne(</span>
+<span class="fc" id="L133">                    Filters.eq(&quot;diaSemana&quot;, diaSemana),</span>
+<span class="fc" id="L134">                    new Document(&quot;$set&quot;, new Document(&quot;activo&quot;, activo))</span>
+            );
+<span class="nc" id="L136">            System.out.println(&quot;Estado de &quot; + diaSemana + &quot; actualizado a: &quot; + activo);</span>
+<span class="nc" id="L137">            return true;</span>
+            
+<span class="fc" id="L139">        } catch (Exception e) {</span>
+<span class="fc" id="L140">            System.err.println(&quot;Error al actualizar estado del dia: &quot; + e.getMessage());</span>
+<span class="fc" id="L141">            return false;</span>
+        }
+    }
+    
+    // =============== DELETE ===============
+    
+    /**
+     * Eliminar configuracion de un dia
+     */
+    public boolean eliminarConfiguracion(String diaSemana) {
+        try {
+<span class="nc" id="L152">            coleccionHorarios.deleteOne(Filters.eq(&quot;diaSemana&quot;, diaSemana));</span>
+<span class="nc" id="L153">            System.out.println(&quot;Configuracion eliminada: &quot; + diaSemana);</span>
+<span class="nc" id="L154">            return true;</span>
+            
+<span class="fc" id="L156">        } catch (Exception e) {</span>
+<span class="fc" id="L157">            System.err.println(&quot;Error al eliminar configuracion: &quot; + e.getMessage());</span>
+<span class="fc" id="L158">            return false;</span>
+        }
+    }
+    
+    // =============== METODOS AUXILIARES ===============
+    
+    /**
+     * Convertir Document a ConfiguracionHorario
+     */
+    private ConfiguracionHorario documentToConfiguracion(Document doc) {
+<span class="fc" id="L168">        ConfiguracionHorario config = new ConfiguracionHorario();</span>
+<span class="fc" id="L169">        config.setDiaSemana(doc.getString(&quot;diaSemana&quot;));</span>
+<span class="fc" id="L170">        config.setHoraInicio(LocalTime.parse(doc.getString(&quot;horaInicio&quot;), timeFormatter));</span>
+<span class="fc" id="L171">        config.setHoraFin(LocalTime.parse(doc.getString(&quot;horaFin&quot;), timeFormatter));</span>
+<span class="fc" id="L172">        config.setDuracionCita(doc.getInteger(&quot;duracionCita&quot;));</span>
+<span class="fc" id="L173">        config.setTiempoDescanso(doc.getInteger(&quot;tiempoDescanso&quot;));</span>
+<span class="fc" id="L174">        config.setActivo(doc.getBoolean(&quot;activo&quot;));</span>
+<span class="fc" id="L175">        return config;</span>
+    }
+    
+    /**
+     * Obtener configuracion por defecto
+     */
+    private ConfiguracionHorario obtenerConfiguracionDefault(String diaSemana) {
+<span class="fc" id="L182">        return new ConfiguracionHorario(</span>
+                diaSemana,
+<span class="fc" id="L184">                LocalTime.of(9, 0),</span>
+<span class="fc" id="L185">                LocalTime.of(17, 0),</span>
+                30,
+                5,
+                true
+        );
+    }
+    
+    /**
+     * Inicializar horarios por defecto si no existen
+     */
+    private void inicializarHorariosDefault() {
+        try {
+<span class="fc" id="L197">            long count = coleccionHorarios.countDocuments();</span>
+            
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">            if (count == 0) {</span>
+<span class="nc" id="L200">                System.out.println(&quot;Inicializando horarios por defecto...&quot;);</span>
+                
+<span class="nc" id="L202">                String[] dias = {&quot;Lunes&quot;, &quot;Martes&quot;, &quot;Miercoles&quot;, &quot;Jueves&quot;, &quot;Viernes&quot;, &quot;Sabado&quot;, &quot;Domingo&quot;};</span>
+                
+<span class="nc bnc" id="L204" title="All 2 branches missed.">                for (String dia : dias) {</span>
+<span class="nc" id="L205">                    ConfiguracionHorario config = new ConfiguracionHorario(</span>
+                            dia,
+<span class="nc" id="L207">                            LocalTime.of(9, 0),</span>
+<span class="nc" id="L208">                            LocalTime.of(17, 0),</span>
+                            30,
+                            5,
+<span class="nc bnc" id="L211" title="All 2 branches missed.">                            !dia.equals(&quot;Domingo&quot;) // Todos activos excepto domingo</span>
+                    );
+<span class="nc" id="L213">                    guardarConfiguracion(config);</span>
+                }
+                
+<span class="nc" id="L216">                System.out.println(&quot;Horarios por defecto inicializados&quot;);</span>
+            }
+<span class="fc" id="L218">        } catch (Exception e) {</span>
+<span class="fc" id="L219">            System.err.println(&quot;Error al inicializar horarios: &quot; + e.getMessage());</span>
+<span class="fc" id="L220">        }</span>
+<span class="fc" id="L221">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

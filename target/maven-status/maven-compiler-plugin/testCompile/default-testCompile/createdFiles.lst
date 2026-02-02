@@ -1,0 +1,17 @@
+com\mycompany\uribejair_lab2u3_met\controlador\ControladorHorariosTest.class
+com\mycompany\uribejair_lab2u3_met\controlador\ControladorCitasTest$VistaAgendarCitaFake.class
+com\mycompany\uribejair_lab2u3_met\vista\MenuPrincipalJUTest.class
+com\mycompany\uribejair_lab2u3_met\vista\VistaAgendarCitaJUTest.class
+com\mycompany\uribejair_lab2u3_met\modelo\CitaTest.class
+com\mycompany\uribejair_lab2u3_met\controlador\ControladorCancelarCitaTest.class
+com\mycompany\uribejair_lab2u3_met\controlador\ControladorCitasTest$GestorCitasFake.class
+com\mycompany\uribejair_lab2u3_met\modelo\GestorCitasTest.class
+com\mycompany\uribejair_lab2u3_met\controlador\ControladorCancelarCitaTest$GestorCitasFake.class
+com\mycompany\uribejair_lab2u3_met\controlador\ControladorHorariosTest$VistaFake.class
+com\mycompany\uribejair_lab2u3_met\controlador\ControladorCancelarCitaTest$VistaCancelarCitaFake.class
+com\mycompany\uribejair_lab2u3_met\modelo\ConfiguracionHorarioTest.class
+com\mycompany\uribejair_lab2u3_met\vista\VistaGestionHorariosTest.class
+com\mycompany\uribejair_lab2u3_met\modelo\GestorHorariosTest.class
+com\mycompany\uribejair_lab2u3_met\vista\VistaCancelarCitaJUTest.class
+com\mycompany\uribejair_lab2u3_met\controlador\ControladorCitasTest.class
+com\mycompany\uribejair_lab2u3_met\modelo\ConexionMongoDBTest.class

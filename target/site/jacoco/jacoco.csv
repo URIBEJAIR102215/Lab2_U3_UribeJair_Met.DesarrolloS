@@ -1,0 +1,21 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met,UribeJair_Lab2U3_Met,68,0,2,0,25,0,5,0,4,0
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.controlador,ControladorCitas,21,203,5,17,8,60,6,15,1,6
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.controlador,ControladorHorarios,379,22,33,1,77,8,24,2,7,2
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.controlador,ControladorCancelarCita,122,69,13,5,36,22,11,5,4,3
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.vista,VistaCancelarCitaJU.new DefaultTableModel() {...},2,8,0,0,1,1,1,1,1,1
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.vista,VistaAgendarCitaJU.new MouseAdapter() {...},13,9,0,0,4,1,2,1,2,1
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.vista,VistaCancelarCitaJU.new DefaultTableCellRenderer() {...},37,6,4,0,6,1,3,1,1,1
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.vista,MenuPrincipalJU,172,410,0,0,41,70,11,4,11,4
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.vista,VistaGestionHorarios,133,1271,12,4,28,217,19,16,12,15
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.vista,VistaGestionHorarios.new MouseAdapter() {...},13,9,0,0,4,1,2,1,2,1
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.vista,VistaAgendarCitaJU,92,761,13,7,19,150,14,16,7,13
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.vista,VistaCancelarCitaJU.new DefaultTableCellRenderer() {...},56,6,6,0,9,1,4,1,1,1
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.vista,VistaCancelarCitaJU.new MouseAdapter() {...},13,9,0,0,4,1,2,1,2,1
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.vista,MenuPrincipalJU.new MouseAdapter() {...},30,12,0,0,6,1,3,1,3,1
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.vista,VistaCancelarCitaJU,79,673,4,6,20,119,11,12,9,9
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.modelo,GestorCitas,300,101,10,0,72,32,10,6,5,6
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.modelo,ConexionMongoDB,17,57,3,5,7,20,3,6,0,5
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.modelo,ConfiguracionHorario,0,82,0,0,0,29,0,15,0,15
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.modelo,GestorHorarios,235,179,11,3,42,50,7,10,1,9
+UribeJair_Lab2U3_Met,com.mycompany.uribejair_lab2u3_met.modelo,Cita,0,81,0,0,0,29,0,15,0,15

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConfiguracionHorario.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">UribeJair_Lab2U3_Met</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.uribejair_lab2u3_met.modelo</a> &gt; <span class="el_source">ConfiguracionHorario.java</span></div><h1>ConfiguracionHorario.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.uribejair_lab2u3_met.modelo;
+
+import java.time.LocalTime;
+
+/**
+ * MODELO: ConfiguracionHorario
+ * Representa la configuracion de horarios de atencion por dia
+ */
+public class ConfiguracionHorario {
+    
+    private String diaSemana;
+    private LocalTime horaInicio;
+    private LocalTime horaFin;
+    private int duracionCita; // en minutos
+    private int tiempoDescanso; // en minutos
+    private boolean activo;
+    
+    // Constructor vacio
+<span class="fc" id="L23">    public ConfiguracionHorario() {</span>
+<span class="fc" id="L24">    }</span>
+    
+    // Constructor completo
+    public ConfiguracionHorario(String diaSemana, LocalTime horaInicio, LocalTime horaFin,
+<span class="fc" id="L28">                                int duracionCita, int tiempoDescanso, boolean activo) {</span>
+<span class="fc" id="L29">        this.diaSemana = diaSemana;</span>
+<span class="fc" id="L30">        this.horaInicio = horaInicio;</span>
+<span class="fc" id="L31">        this.horaFin = horaFin;</span>
+<span class="fc" id="L32">        this.duracionCita = duracionCita;</span>
+<span class="fc" id="L33">        this.tiempoDescanso = tiempoDescanso;</span>
+<span class="fc" id="L34">        this.activo = activo;</span>
+<span class="fc" id="L35">    }</span>
+    
+    // Getters y Setters
+    public String getDiaSemana() {
+<span class="fc" id="L39">        return diaSemana;</span>
+    }
+    
+    public void setDiaSemana(String diaSemana) {
+<span class="fc" id="L43">        this.diaSemana = diaSemana;</span>
+<span class="fc" id="L44">    }</span>
+    
+    public LocalTime getHoraInicio() {
+<span class="fc" id="L47">        return horaInicio;</span>
+    }
+    
+    public void setHoraInicio(LocalTime horaInicio) {
+<span class="fc" id="L51">        this.horaInicio = horaInicio;</span>
+<span class="fc" id="L52">    }</span>
+    
+    public LocalTime getHoraFin() {
+<span class="fc" id="L55">        return horaFin;</span>
+    }
+    
+    public void setHoraFin(LocalTime horaFin) {
+<span class="fc" id="L59">        this.horaFin = horaFin;</span>
+<span class="fc" id="L60">    }</span>
+    
+    public int getDuracionCita() {
+<span class="fc" id="L63">        return duracionCita;</span>
+    }
+    
+    public void setDuracionCita(int duracionCita) {
+<span class="fc" id="L67">        this.duracionCita = duracionCita;</span>
+<span class="fc" id="L68">    }</span>
+    
+    public int getTiempoDescanso() {
+<span class="fc" id="L71">        return tiempoDescanso;</span>
+    }
+    
+    public void setTiempoDescanso(int tiempoDescanso) {
+<span class="fc" id="L75">        this.tiempoDescanso = tiempoDescanso;</span>
+<span class="fc" id="L76">    }</span>
+    
+    public boolean isActivo() {
+<span class="fc" id="L79">        return activo;</span>
+    }
+    
+    public void setActivo(boolean activo) {
+<span class="fc" id="L83">        this.activo = activo;</span>
+<span class="fc" id="L84">    }</span>
+    
+    @Override
+    public String toString() {
+<span class="fc" id="L88">        return &quot;ConfiguracionHorario{&quot; +</span>
+                &quot;diaSemana='&quot; + diaSemana + '\'' +
+                &quot;, horaInicio=&quot; + horaInicio +
+                &quot;, horaFin=&quot; + horaFin +
+                &quot;, duracionCita=&quot; + duracionCita +
+                &quot;, tiempoDescanso=&quot; + tiempoDescanso +
+                &quot;, activo=&quot; + activo +
+                '}';
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

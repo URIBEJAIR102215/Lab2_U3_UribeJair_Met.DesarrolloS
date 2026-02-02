@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.mycompany.uribejair_lab2u3_met.vista.VistaAgendarCitaJUTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.062 s - in com.mycompany.uribejair_lab2u3_met.vista.VistaAgendarCitaJUTest
