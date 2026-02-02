@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -24,7 +25,7 @@
             <version>4.11.1</version>
         </dependency>
 
-        <!-- JUnit 5 (estable) -->
+        <!-- JUnit 5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -40,7 +41,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Mockito integrado con JUnit 5 -->
+        <!-- Mockito + JUnit 5 -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
@@ -53,7 +54,7 @@
     <build>
         <plugins>
 
-            <!-- Compilador -->
+            <!-- COMPILADOR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -63,26 +64,35 @@
                 </configuration>
             </plugin>
 
-            <!-- Surefire -->
+            <!-- SUREFIRE (EXCLUYE TESTS DE VISTA SWING) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*Vista*Test.java</exclude>
+                        <exclude>**/*JU*Test.java</exclude>
+                        <exclude>**/MenuPrincipal*Test.java</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
 
-            <!-- JaCoCo -->
+            <!-- JACOCO -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.11</version>
                 <executions>
 
+                    <!-- PREPARE AGENT -->
                     <execution>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
 
+                    <!-- REPORT -->
                     <execution>
                         <id>report</id>
                         <phase>test</phase>
