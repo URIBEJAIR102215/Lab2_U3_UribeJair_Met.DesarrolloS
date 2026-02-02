@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.mycompany</groupId>
     <artifactId>UribeJair_Lab2U3_Met</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
+    <!-- ================= PROPIEDADES ================= -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
-        <!-- CLAVE -->
-        <java.awt.headless>true</java.awt.headless>
+        <junit.version>5.10.2</junit.version>
+        <mockito.version>5.11.0</mockito.version>
+        <jacoco.version>0.8.11</jacoco.version>
     </properties>
 
+    <!-- ================= DEPENDENCIAS ================= -->
     <dependencies>
 
         <!-- MongoDB -->
@@ -29,7 +34,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.10.2</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -37,23 +42,25 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.11.0</version>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
 
+        <!-- Mockito + JUnit 5 -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>5.11.0</version>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
 
     </dependencies>
 
+    <!-- ================= BUILD ================= -->
     <build>
         <plugins>
 
-            <!-- COMPILER -->
+            <!-- COMPILADOR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -63,23 +70,19 @@
                 </configuration>
             </plugin>
 
-            <!-- SUREFIRE (CLAVE) -->
+            <!-- SUREFIRE (CLAVE PARA HEADLESS) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
-                    <!-- HEADLESS -->
-                    <systemPropertyVariables>
-                        <java.awt.headless>true</java.awt.headless>
-                    </systemPropertyVariables>
+                    <!-- MODO HEADLESS -->
+                    <argLine>-Djava.awt.headless=true</argLine>
 
-                    <!-- EXCLUIR VISTAS -->
+                    <!-- EXCLUIR TESTS CON SWING -->
                     <excludes>
-                        <exclude>**/vista/**</exclude>
                         <exclude>**/*Vista*Test.java</exclude>
-                        <exclude>**/*JU*Test.java</exclude>
-                        <exclude>**/MenuPrincipal*Test.java</exclude>
+                        <exclude>**/Controlador*Test.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -88,14 +91,17 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.11</version>
+                <version>${jacoco.version}</version>
                 <executions>
+
+                    <!-- Agente -->
                     <execution>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
 
+                    <!-- Reporte -->
                     <execution>
                         <id>report</id>
                         <phase>test</phase>
@@ -103,6 +109,34 @@
                             <goal>report</goal>
                         </goals>
                     </execution>
+
+                    <!-- CHECK 50% -->
+                    <execution>
+                        <id>check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.50</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>METHOD</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.50</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+
                 </executions>
             </plugin>
 
