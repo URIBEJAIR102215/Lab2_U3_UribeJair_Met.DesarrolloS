@@ -1,24 +1,41 @@
 package com.mycompany.uribejair_lab2u3_met.vista;
 
 import com.mycompany.uribejair_lab2u3_met.modelo.ConfiguracionHorario;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class VistaGestionHorariosTest {
+class VistaGestionHorariosTest {
+
+    private VistaGestionHorarios vista;
+
+    // ====== Configuración para entorno CI (headless) ======
+    @BeforeAll
+    static void configurarHeadless() {
+        System.setProperty("java.awt.headless", "true");
+    }
+
+    // ====== Crear instancia SIN constructor Swing ======
+    @BeforeEach
+    void setUp() throws Exception {
+        vista = (VistaGestionHorarios)
+                sun.reflect.ReflectionFactory
+                        .getReflectionFactory()
+                        .newConstructorForSerialization(
+                                VistaGestionHorarios.class,
+                                Object.class.getDeclaredConstructor()
+                        ).newInstance();
+    }
 
     @Test
-    public void testCrearVistaGestionHorarios() {
-        VistaGestionHorarios vista = new VistaGestionHorarios();
+    void testCrearVistaGestionHorarios() {
         assertNotNull(vista, "La vista no debe ser null");
     }
 
     @Test
-    public void testCargarDatosNoLanzaExcepcion() {
-        VistaGestionHorarios vista = new VistaGestionHorarios();
-
+    void testCargarDatosNoLanzaExcepcion() {
         ConfiguracionHorario config = new ConfiguracionHorario(
                 "Lunes",
                 LocalTime.of(8, 0),

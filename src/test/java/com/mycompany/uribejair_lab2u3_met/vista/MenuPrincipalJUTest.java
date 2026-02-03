@@ -81,12 +81,16 @@ class MenuPrincipalJUTest {
         );
         m.setAccessible(true);
 
+        Runnable accion = () -> {
+            // acción simulada
+        };
+
         JPanel tarjeta = (JPanel) m.invoke(
                 menu,
                 "Titulo",
                 "Descripcion",
                 Color.BLUE,
-                () -> {}
+                accion
         );
 
         assertNotNull(tarjeta);
